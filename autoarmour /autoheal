@@ -126,7 +126,6 @@ Sparks.Texture = "rbxassetid://8611887361"
 Sparks.RotSpeed = NumberRange.new(-30, 30)
 Sparks.Orientation = Enum.ParticleOrientation.VelocityParallel
 Sparks.Parent = Attachment
-
 local StarSparks = Instance.new("ParticleEmitter")
 StarSparks.Name = "Star Sparks"
 StarSparks.Lifetime = NumberRange.new(1.5, 1.5)
@@ -144,3 +143,52 @@ StarSparks.Texture = "rbxassetid://8611887703"
 StarSparks.RotSpeed = NumberRange.new(-30, 30)
 StarSparks.Rotation = NumberRange.new(-30, 30)
 StarSparks.Parent = Attachment
+local function spawn()
+    local player = Players.LocalPlayer
+
+    Attachment.Parent = player.Character.LowerTorso
+
+    StarSparks.Enabled = true
+    Sparks.Enabled = true
+    HealingWave1.Enabled = true
+    HealingWave2.Enabled = true
+end
+
+spawn()
+-- ABOVE IS AURA HEAL BY SPD FOR FUCKING FDU BITCH
+--yuh
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+
+local function applyForcefield(player)
+    if player and player.Character and player.Character:FindFirstChild("Head") then
+        -- Remove any existing highlight
+        local existing = player.Character:FindFirstChild("PlayerForcefield")
+        if existing then
+            existing:Destroy()
+        end
+
+        
+        local highlight = Instance.new("Highlight")
+        highlight.Name = "PlayerForcefield"
+        highlight.Adornee = player.Character
+        highlight.FillColor = Color3.new(1, 1, 1) -- White color
+        highlight.FillTransparency = 0.8         -- Mostly transparent
+        highlight.OutlineColor = Color3.new(1, 1, 1)
+        highlight.OutlineTransparency = 1        -- Fully hide the outline
+        highlight.Parent = player.Character
+    end
+end
+
+
+LocalPlayer.CharacterAdded:Connect(function(character)
+    
+    character:WaitForChild("Head", 5)
+    applyForcefield(LocalPlayer)
+end)
+
+if LocalPlayer.Character then
+    applyForcefield(LocalPlayer)
+end
+-- forcefield
